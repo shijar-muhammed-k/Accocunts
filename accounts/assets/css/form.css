@@ -1,101 +1,98 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito');
- body {
-	 font-family: 'Nunito', sans-serif;
-	 margin: 0;
+h4 {
+	font-weight: bold;
+	margin-bottom: 2.5rem;
 }
- .wrapper {
-	 height: 100%;
-	 width: 100%;
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
+
+.form-wrapper {
+	background: #fff;
+	border-radius: 5px;
+	padding: 50px;
+	border: 1px solid black;
+	width: 50vw;
 }
- .wrapper .content {
-	 background-color: #fff;
-	 padding: 30px 15px;
-	 border-radius: 10px;
-	 width: 100%;
-	 max-width: 500px;
-	 min-width: 200px;
-	 border: 1px solid black;
+
+.form-control,
+.custom-select {
+	border-radius: 0px;
+	color: #495057;
+	background-color: #f1f1f1;
+	border-color: none;
 }
- .wrapper .content button {
-	 padding: 15px;
-	 width: 150px;
-	 border: 1px solid #eee;
-	 background: transparent;
-	 border-radius: 50px;
-	 color: #333;
-	 cursor: pointer;
-}
- .wrapper .content button:focus {
-	 outline: none;
-}
- .wrapper .content header {
-	 text-align: center;
-}
- .wrapper .content header h1 {
-	 margin-top: 0;
-	 font-size: 230%;
-}
- .wrapper .content .login-form {
-	 padding: 0 20px;
-	 display: flex;
-	 flex-direction: column;
-	 align-items: center;
-}
- .wrapper .content .login-form .input-group {
-	 display: flex;
-	 flex-direction: column;
-	 margin-top: 10px;
-	 width: 100%;
-	 max-width: 310px;
-}
- .wrapper .content .login-form .input-group input {
-	 padding: 15px;
-	 font-size: 13px;
-	 border: 1px solid #e4eff8;
-	 background-color: #e4eff8;
-	 border-radius: 50px;
-	 tranistion: border 0.5s;
-	 -webkit-tranistion: border 0.5s;
-}
- .wrapper .content .login-form .input-group input:focus {
-	 outline: 0;
-	 border-color: #20bdff;
-}
- .wrapper .content .login-form .input-group label {
-	 color: #999;
-	 font-size: 12px;
-	 margin-bottom: 3px;
-	 margin-left: 16px;
-}
- .wrapper .content .login-form .input-group button {
-	 background-color: #20bdff;
-	 border: unset;
-	 color: #fff;
-	 align-self: center;
-	 margin-top: 15px;
-	 transition: background 0.5s;
-	 -webkit-transition: background 0.5s;
-}
- .wrapper .content .login-form .input-group button:hover {
-	 background-color: #5433ff;
-}
- .wrapper .content footer {
-	 padding-top: 15px;
-	 text-align: center;
-}
- .wrapper .content footer a {
-	 color: #999;
-	 text-decoration: none;
-	 font-size: 11px;
-}
- @media screen and (max-width: 720px) {
-	 .wrapper .content {
-		 padding-right: 0;
-		 padding-left: 0;
-		 margin: 0 10px;
+
+@media (min-width: 768px) {
+	.col-md-7 {
+		max-width: none !important;
 	}
 }
- 
+
+.form-control:focus {
+	color: #495057;
+	background-color: #ffffff;
+	border: 1px solid #b5b6b3;
+	outline: 0;
+	box-shadow: none;
+
+}
+
+.btn {
+	background: #3494E6;
+	border: #3494E6;
+	padding: 0.6rem 3rem;
+	font-weight: bold;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+	background: #3494E6;
+	border: #3494E6;
+	outline: 0;
+}
+
+.profile-pic {
+	color: transparent;
+	/* transition: all 0.3s ease; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	/* transition: all 0.3s ease; */
+  }
+  .profile-pic input {
+	display: none;
+  }
+  .profile-pic img {
+	position: absolute;
+	object-fit: cover;
+	width: 165px;
+	height: 165px;
+	box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+	border-radius: 100px;
+	z-index: 0;
+  }
+  .profile-pic .-label {
+	cursor: pointer;
+	height: 165px;
+	width: 165px;
+  }
+
+  .profile-pic:hover .-label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, .8);
+	z-index: 10000;
+	color: #fafafa;
+	/* transition: background-color 0.2s ease-in-out; */
+	border-radius: 100px;
+	margin-bottom: 0;
+  }
+
+  .profile-pic span {
+	display: inline-flex;
+	/* padding: 0.2em; */
+	height: 2em;
+  }

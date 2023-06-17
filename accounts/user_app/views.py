@@ -10,7 +10,11 @@ def login(request):
     return render(request, 'login.html')
 
 def admin_home(request):
-    return render(request, 'admin/admin_home.html')
+    print(request.path)
+    return render(request, 'admin/home.html')
 
 def staffs(request):
     return render(request, 'admin/staffs.html')
+
+def add_staff(request):
+    return render(request, 'admin/add_staff.html')
