@@ -1,0 +1,128 @@
+{% extends 'admin/admin_home.html' %}
+
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/expences.css' %}">
+</head>
+
+<div class="content">
+
+    <div class="table-con" style="overflow: hidden;">
+        <div class="heading">
+            <div class="title">Returns Record</div>
+
+            <div class="row">
+
+                <table class="table">
+                    <thead>
+                        <tr class="filters">
+                            <th>Staff
+                                <select class="form-control">
+                                    <option value="all">All</option>
+                                    <option value="staff1">Staff1</option>
+                                    <option value="staff2">Staff2</option>
+                                </select>
+                            </th>
+                            <th>
+                                <button class="btn btn-primary">Search</button>
+                            </th>
+                            <th>
+                                <button class="btn btn-primary" onclick="add_return()">Add Return</button>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="max-width: 350px; min-width: 300px;">Date</th>
+                    <th style="max-width: 350px; min-width: 300px;">Staff</th>
+                    <th style="max-width: 350px; min-width: 300px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="row">
+                    <td class="date" style="max-width: 350px; min-width: 300px;">
+                        <p>12/05/2020</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p>Staff1</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p><a style="color: brown;" onclick="itemCliked()">View Details</a></p>
+                    </td>
+                </tr>
+
+                <tr class="row">
+                    <td class="date" style="max-width: 350px; min-width: 300px;">
+                        <p>17/05/2020</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p>Staff2</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p><a style="color: brown;" onclick="itemCliked()">View Details</a></p>
+                    </td>
+                    <!-- <td class="disable"><p></p></td> -->
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--table container -->
+
+    <div class="content expand_details" id="expand_details">
+        <button onclick="closeBtn()">&times</button>
+        <div class="show_details" style="width: 50vw; left: 50%; top: 50%; position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; gap: 10px;">
+            <input type="text" readonly value="Staff1" class="form-control" style="width: 250px; text-align: center;">
+            <textarea class="form-control" cols="30" rows="15">
+                Name - syam subhash 
+                Address - puthenpureckal
+                Land mark -  irumpupalam pumb
+                City -irumpupalam
+                state- Kerala 
+                pin code -685561
+                Contact no1 -9778175264
+                Contact no2 - 
+                Phone model- realme 6
+                4G/5G - 4g
+                Case type -4D
+                Payment mode- (PAYTM) </textarea>
+        </div>
+    </div>
+
+    <div class="content expand_details" id="add_return">
+        <button onclick="closeBtn()" style="position: absolute; top: 15%; right: 5%;">&times</button>
+        <div class="show_details" style="width: 50vw; left: 50%; top: 50%; position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; gap: 10px;">
+            <select class="form-control" style="width: 250px; text-align: center;">
+                <option value="staff1">Staff1</option>    
+                <option value="staff2">Staff2</option>    
+            </select>
+            <textarea class="form-control" cols="30" rows="15"></textarea>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function itemCliked() {
+        document.getElementById('expand_details').style.display = "block";
+    }
+    function closeBtn() {
+        document.getElementById('add_return').style.display = "none";
+        document.getElementById('expand_details').style.display = "none";
+    }
+    function add_return() {
+        document.getElementById('add_return').style.display = "block";
+    }
+</script>
+
+{% endblock %}

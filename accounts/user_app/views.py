@@ -18,3 +18,9 @@ def staffs(request):
 
 def add_staff(request):
     return render(request, 'admin/add_staff.html')
+
+def expences(request):
+    return render(request, 'admin/expences.html')
+
+def returns(request):
+    return render(request, 'admin/returns.html')

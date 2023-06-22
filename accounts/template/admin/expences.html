@@ -1,0 +1,234 @@
+{% extends 'admin/admin_home.html' %}
+
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/expences.css' %}">
+</head>
+
+<div class="content">
+    <div class="cards-con">
+        <div class="title">
+            <div class="main">Summary</div>
+        </div>
+        <!-- end of cards title -->
+
+        <div class="cards">
+            <div class="card card-1">
+                <div class="rec-1"></div>
+                <div class="rec-2"></div>
+                <div class="content">
+                    <div class="name">Expence &nbsp;&nbsp;&nbsp;&nbsp; March-2023</div>
+                    <div class="name">Total Expence: 5000Rs</div>
+                    <div class="name">Average Expence: 35000Rs</div>
+                </div>
+            </div>
+
+            <div class="card" style="background: aquamarine; display: flex; cursor: pointer;">
+                <div class="card-content"
+                    style="font-size: 20px; text-align: center; transform: translate(80%, 40%); color: black;" onclick="addExpence()">
+                    Add Expence
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="table-con" style="overflow: hidden;">
+        <div class="heading">
+            <div class="title">Expence Record</div>
+
+            <div class="row">
+
+                <table class="table">
+                    <thead>
+                        <tr class="filters">
+                            <th>From Date
+                                <input id="assigned-user-filter" type='date' class="form-control">
+                            </th>
+                            <th>To Date
+                                <input id="assigned-user-filter" type='date' class="form-control">
+                            </th>
+                            <th>
+                                <button class="btn btn-primary">Search</button>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="max-width: 350px; min-width: 300px;">Date</th>
+                    <th style="max-width: 350px; min-width: 300px;">Remark</th>
+                    <th style="max-width: 350px; min-width: 300px;">Amount</th>
+                    <th style="max-width: 350px; min-width: 300px;"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="row">
+                    <td class="date" style="max-width: 350px; min-width: 300px;">
+                        <p>12/05/2020</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p>Ad</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p>24</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p><a style="color: brown;" href="">Edit</a></p>
+                    </td>
+                </tr>
+
+                <tr class="row">
+                    <td class="date" style="max-width: 350px; min-width: 300px;">
+                        <p>17/05/2020</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p><a onclick="itemCliked()">2 Needs</a></p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p>48</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p><a style="color: brown;" href="">Edit</a></p>
+                    </td>
+                    <!-- <td class="disable"><p></p></td> -->
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--table container -->
+
+    <div class="content expand_details" id="expand_details">
+        <button onclick="closeBtn()">&times</button>
+        <div class="table-con">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="max-width: 350px; min-width: 300px;">Remark</th>
+                        <th style="max-width: 350px; min-width: 300px;">Amount</th>
+                        <th style="max-width: 350px; min-width: 300px;"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="row">
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p>Ad</p>
+                        </td>
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p>24</p>
+                        </td>
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p>Edit</p>
+                        </td>
+                    </tr>
+
+                    <tr class="row">
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p>cases</p>
+                        </td>
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p>48</p>
+                        </td>
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p></p>
+                        </td>
+                        <!-- <td class="disable"><p></p></td> -->
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+        <!--table container -->
+    </div>
+
+    <div class="content expand_details" id="add_expence_container">
+        <head>  
+            <head> 
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+           </head> 
+        </head>
+        <button onclick="closeBtn()">&times</button>
+        <section class="contact-from pt-4" style="border: 1px solid; background: #fff;"> 
+           <body>  
+                <div class="container">  
+                     <br />  
+                     <br />  
+                     <h2 align="center">Add Expence</h2>  
+                     <div class="form-group">  
+                          <form name="add_name" id="add_name">  
+                               <div class="table-responsive">  
+                                    <table class="table table-bordered" id="dynamic_field">  
+                                         <tr>  
+                                              <td><input type="text" name="name[]" placeholder="Expence" class="form-control name_list" /></td>  
+                                              <td><input type="text" name="amount[]" placeholder="Amount" class="form-control name_list" /></td>  
+                                              <td><button type="button" name="add" id="add" class="btn btn-success" style="position: inherit;">Add More</button></td>  
+                                         </tr>  
+                                    </table>  
+                                    <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />  
+                               </div>  
+                          </form>  
+                     </div>  
+                </div>  
+           </body>  
+      </html>  
+      <script>  
+      $(document).ready(function(){  
+           var i=1;  
+           $('#add').click(function(){  
+                i++;  
+                $('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="name[]" placeholder="Expence" class="form-control name_list" /></td><td><input type="text" name="amount[]" placeholder="Amount" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" style="position: inherit;">X</button></td></tr>');  
+           });  
+           $(document).on('click', '.btn_remove', function(){  
+                var button_id = $(this).attr("id");   
+                $('#row'+button_id+'').remove();  
+           });  
+           $('#submit').click(function(){            
+                $.ajax({  
+                     url:"name.php",  
+                     method:"POST",  
+                     data:$('#add_name').serialize(),  
+                     success:function(data)  
+                     {  
+                          alert(data);  
+                          $('#add_name')[0].reset();  
+                     }  
+                });  
+           });  
+      });  
+      </script>
+        </section>
+    </div>
+
+
+</div>
+
+<script>
+    function itemCliked() {
+        document.getElementById('expand_details').style.display = "block";
+    }
+    function closeBtn() {
+        document.getElementById('add_expence_container').style.display = "none";
+        document.getElementById('expand_details').style.display = "none";
+    }
+    function addExpence() {
+        document.getElementById('add_expence_container').style.display = "block";
+    }
+</script>
+
+{% endblock %}
