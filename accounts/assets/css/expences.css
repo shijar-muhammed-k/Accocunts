@@ -35,6 +35,10 @@ table a {
     position: absolute;
     top: 15%;
     right: 5%;
+    color: #fff;
+    background: #000;
+    font-size: 20px;
+    width: 30px;
 }
 
 .row::before {

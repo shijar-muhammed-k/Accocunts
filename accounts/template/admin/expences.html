@@ -53,6 +53,9 @@
                             <th>To Date
                                 <input id="assigned-user-filter" type='date' class="form-control">
                             </th>
+                            <th>KeyWord
+                                <input id="assigned-user-filter" type='text' class="form-control">
+                            </th>
                             <th>
                                 <button class="btn btn-primary">Search</button>
                             </th>
@@ -67,6 +70,7 @@
             <thead>
                 <tr>
                     <th style="max-width: 350px; min-width: 300px;">Date</th>
+                    <th style="max-width: 350px; min-width: 300px;">Purchase</th>
                     <th style="max-width: 350px; min-width: 300px;">Remark</th>
                     <th style="max-width: 350px; min-width: 300px;">Amount</th>
                     <th style="max-width: 350px; min-width: 300px;"></th>
@@ -82,6 +86,9 @@
                         <p>Ad</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p>Remark</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
                         <p>24</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
@@ -94,7 +101,10 @@
                         <p>17/05/2020</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p><a onclick="itemCliked()">2 Needs</a></p>
+                        <p>Purchase</p>
+                    </td>
+                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                        <p>Remark</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
                         <p>48</p>
@@ -116,6 +126,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th style="max-width: 350px; min-width: 300px;">Purchase</th>
                         <th style="max-width: 350px; min-width: 300px;">Remark</th>
                         <th style="max-width: 350px; min-width: 300px;">Amount</th>
                         <th style="max-width: 350px; min-width: 300px;"></th>
@@ -128,6 +139,9 @@
                             <p>Ad</p>
                         </td>
                         <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p>Remark</p>
+                        </td>
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
                             <p>24</p>
                         </td>
                         <td class="name" style="max-width: 350px; min-width: 300px;">
@@ -138,6 +152,9 @@
                     <tr class="row">
                         <td class="name" style="max-width: 350px; min-width: 300px;">
                             <p>cases</p>
+                        </td>
+                        <td class="name" style="max-width: 350px; min-width: 300px;">
+                            <p>Remark</p>
                         </td>
                         <td class="name" style="max-width: 350px; min-width: 300px;">
                             <p>48</p>
@@ -175,9 +192,9 @@
                                <div class="table-responsive">  
                                     <table class="table table-bordered" id="dynamic_field">  
                                          <tr>  
-                                              <td><input type="text" name="name[]" placeholder="Expence" class="form-control name_list" /></td>  
-                                              <td><input type="text" name="amount[]" placeholder="Amount" class="form-control name_list" /></td>  
-                                              <td><button type="button" name="add" id="add" class="btn btn-success" style="position: inherit;">Add More</button></td>  
+                                              <td><input type="text" name="name" placeholder="Purchase" class="form-control name_list" /></td>  
+                                              <td><input type="text" name="amount" placeholder="Remark" class="form-control name_list" /></td>
+                                              <td><input type="text" name="Remark" placeholder="Amount" class="form-control name_list" /></td>
                                          </tr>  
                                     </table>  
                                     <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />  
