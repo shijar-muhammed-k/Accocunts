@@ -10,7 +10,6 @@ urlpatterns = [
     path('staffs', views.staffs, name='staffs'),
     path('add_staff', views.add_staff, name='add-staffs'),
     path('expences', views.expences, name='expences'),
-    path('add_expence', views.add_expences, name='add_expences'),
     path('returns', views.returns, name='return'),
     path('edit-staff-<id>', views.editStaff, name='return'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
