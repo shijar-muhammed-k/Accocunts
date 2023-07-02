@@ -78,43 +78,25 @@
             </thead>
 
             <tbody>
+                {% for data in data %}
                 <tr class="row">
                     <td class="date" style="max-width: 350px; min-width: 300px;">
-                        <p>12/05/2020</p>
+                        <p>{{data.Date}}</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p>Ad</p>
+                        <p>{{data.Purchase}}</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p>Remark</p>
+                        <p>{{data.Remark}}</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p>24</p>
+                        <p>{{data.Amount}}</p>
                     </td>
                     <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p><a style="color: brown;" href="">Edit</a></p>
+                        <p>Edit</p>
                     </td>
                 </tr>
-
-                <tr class="row">
-                    <td class="date" style="max-width: 350px; min-width: 300px;">
-                        <p>17/05/2020</p>
-                    </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p>Purchase</p>
-                    </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p>Remark</p>
-                    </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p>48</p>
-                    </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p><a style="color: brown;" href="">Edit</a></p>
-                    </td>
-                    <!-- <td class="disable"><p></p></td> -->
-                </tr>
-
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -134,38 +116,22 @@
                 </thead>
 
                 <tbody>
+                    {% for data in data %}
                     <tr class="row">
                         <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>Ad</p>
+                            <p>{{data.Purchace}}</p>
                         </td>
                         <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>Remark</p>
+                            <p>{{data.Remark}}</p>
                         </td>
                         <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>24</p>
+                            <p>{{data.Amount}}</p>
                         </td>
                         <td class="name" style="max-width: 350px; min-width: 300px;">
                             <p>Edit</p>
                         </td>
                     </tr>
-
-                    <tr class="row">
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>cases</p>
-                        </td>
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>Remark</p>
-                        </td>
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>48</p>
-                        </td>
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p></p>
-                        </td>
-                        <!-- <td class="disable"><p></p></td> -->
-                    </tr>
-
-
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -188,16 +154,17 @@
                      <br />  
                      <h2 align="center">Add Expence</h2>  
                      <div class="form-group">  
-                          <form name="add_name" id="add_name">  
+                          <form name="add_name" id="add_name" action="add_expence" method="post">
+                            {% csrf_token %}  
                                <div class="table-responsive">  
                                     <table class="table table-bordered" id="dynamic_field">  
                                          <tr>  
-                                              <td><input type="text" name="name" placeholder="Purchase" class="form-control name_list" /></td>  
-                                              <td><input type="text" name="amount" placeholder="Remark" class="form-control name_list" /></td>
-                                              <td><input type="text" name="Remark" placeholder="Amount" class="form-control name_list" /></td>
+                                              <td><input type="text" name="purchase" placeholder="Purchase" class="form-control name_list" /></td>  
+                                              <td><input type="text" name="remark" placeholder="Remark" class="form-control name_list" /></td>
+                                              <td><input type="text" name="amount" placeholder="Amount" class="form-control name_list" /></td>
                                          </tr>  
                                     </table>  
-                                    <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />  
+                                    <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />  
                                </div>  
                           </form>  
                      </div>  

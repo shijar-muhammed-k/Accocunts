@@ -17,243 +17,30 @@
             </div>
         </div>
         <div class="row team-items">
+            {% for data in staffs %}
             <div class="col-md-4 single-item">
-                <div class="item">
-                    <div class="thumb">
-                        <img class="img-fluid" src="https://i.ibb.co/JC4skS0/team-animate.jpg" alt="Thumb">
-                        <div class="overlay">
-                            <h4>Lorem Ipsum</h4>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            </p>
-                            <div class="social">
-                                <ul>
-                                    <li class="twitter">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="pinterest">
-                                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="vimeo">
-                                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <span class="message">
-                            <a href="#"><i class="fas fa-envelope-open"></i></a>
-                        </span>
-                        <h4>Staff 1</h4>
-                        <span>7894561230</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 single-item">
-                <a href="add_staff">
+                <a href="edit-staff-{{data.id}}">
                     <div class="item">
                         <div class="thumb">
-                            <img class="img-fluid" src="https://i.ibb.co/JC4skS0/team-animate.jpg" alt="Thumb">
+                            <img class="img-fluid" src="media/{{data.profile_picture}}" alt="Thumb">
                             <div class="overlay">
-                                <h4>email@exmple</h4>
+                                <h4>{{data.email}}</h4>
                                 <p>
-                                    Address Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    {{data.address}}
                                 </p>
-                                <p>Active: <input type="checkbox" id="switch" /><label for="switch">Toggle</label></p>
-                                <p>Access: <input type="checkbox" id="switch" /><label for="switch">Toggle</label></p>
+                                <p>Active: <input type="checkbox" {% if data.status %}checked{% endif %} id="switch" /><label for="switch">Toggle</label></p>
+                                <p>Access: <input type="checkbox" {% if data.status %}checked{% endif %} id="switch" /><label for="switch">Toggle</label></p>
+                                <p>{% if data.attachment %}<a href="{{data.attachment.url}}" download="">Attachment</a>{% endif %}</p>
                             </div>
                         </div>
                         <div class="info">
-                            <h4>Staff 2</h4>
-                            <span>7894561230</span>
+                            <h4>{{data.firstName}}</h4>
+                            <span>{{data.phoneNumber}}</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-md-4 single-item">
-                <div class="item">
-                    <div class="thumb">
-                        <img class="img-fluid" src="https://i.ibb.co/JC4skS0/team-animate.jpg" alt="Thumb">
-                        <div class="overlay">
-                            <h4>Lorem Ipsum</h4>
-                            <p>
-                                kING.
-                            </p>
-                            <div class="social">
-                                <ul>
-                                    <li class="twitter">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="pinterest">
-                                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="vimeo">
-                                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <span class="message">
-                            <a href="#"><i class="fas fa-envelope-open"></i></a>
-                        </span>
-                        <h4>Lorem Ipsum</h4>
-                        <span>App Developer</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 single-item">
-                <div class="item">
-                    <div class="thumb">
-                        <img class="img-fluid" src="https://i.ibb.co/JC4skS0/team-animate.jpg" alt="Thumb">
-                        <div class="overlay">
-                            <h4>Lorem Ipsum</h4>
-                            <p>
-                                kING.
-                            </p>
-                            <div class="social">
-                                <ul>
-                                    <li class="twitter">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="pinterest">
-                                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="vimeo">
-                                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <span class="message">
-                            <a href="#"><i class="fas fa-envelope-open"></i></a>
-                        </span>
-                        <h4>Lorem Ipsum</h4>
-                        <span>App Developer</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 single-item">
-                <div class="item">
-                    <div class="thumb">
-                        <img class="img-fluid" src="https://i.ibb.co/JC4skS0/team-animate.jpg" alt="Thumb">
-                        <div class="overlay">
-                            <h4>Lorem Ipsum</h4>
-                            <p>
-                                kING.
-                            </p>
-                            <div class="social">
-                                <ul>
-                                    <li class="twitter">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="pinterest">
-                                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="vimeo">
-                                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <span class="message">
-                            <a href="#"><i class="fas fa-envelope-open"></i></a>
-                        </span>
-                        <h4>Lorem Ipsum</h4>
-                        <span>App Developer</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 single-item">
-                <div class="item">
-                    <div class="thumb">
-                        <img class="img-fluid" src="https://i.ibb.co/JC4skS0/team-animate.jpg" alt="Thumb">
-                        <div class="overlay">
-                            <h4>Lorem Ipsum</h4>
-                            <p>
-                                kING.
-                            </p>
-                            <div class="social">
-                                <ul>
-                                    <li class="twitter">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="pinterest">
-                                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="vimeo">
-                                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <span class="message">
-                            <a href="#"><i class="fas fa-envelope-open"></i></a>
-                        </span>
-                        <h4>Lorem Ipsum</h4>
-                        <span>App Developer</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 single-item">
-                <div class="item">
-                    <div class="thumb">
-                        <img class="img-fluid" src="https://i.ibb.co/JC4skS0/team-animate.jpg" alt="Thumb">
-                        <div class="overlay">
-                            <h4>Lorem Ipsum</h4>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            </p>
-                            <div class="social">
-                                <ul>
-                                    <li class="twitter">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="pinterest">
-                                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="vimeo">
-                                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <span class="message">
-                            <a href="#"><i class="fas fa-envelope-open"></i></a>
-                        </span>
-                        <h4>Lorem Ipsum</h4>
-                        <span>Web designer</span>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

@@ -1,12 +1,16 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.login, name='login'),
-    path('login', views.login, name='login'),
+    path('', views.user_login, name='login'),
+    path('login', views.user_login, name='login'),
     path('admin_home', views.admin_home, name='admin_home'),
     path('staffs', views.staffs, name='staffs'),
     path('add_staff', views.add_staff, name='add-staffs'),
     path('expences', views.expences, name='expences'),
+    path('add_expence', views.add_expences, name='add_expences'),
     path('returns', views.returns, name='return'),
-]
+    path('edit-staff-<id>', views.editStaff, name='return'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
