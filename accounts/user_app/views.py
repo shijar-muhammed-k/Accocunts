@@ -21,6 +21,9 @@ def user_login(request):
             return render(request, 'login.html', {'msg' : True})
     return render(request, 'login.html')
 
+def user_logout(request):
+    logout(request)
+    return redirect('login')
 
 @login_required()
 def admin_home(request):
