@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/expences.css' %}">
 </head>
-<div class="content">
+{% with user_role=request.session.user_role %}
+<div class="content" style="padding: 0 50px 0 0;">
     <div class="cards-con">
         <div class="title">
             <div class="main">Summary</div>
@@ -71,37 +72,41 @@
 
 
 
-    <div class="table-con">
+    <div class="table-con" style="overflow: hidden;">
         <div class="title">Sales Record</div>
         <div class="row">
 
             <table class="table">
                 <thead>
-                    <tr class="filters">
-                        <th>Staff
-                            <select class="form-control">
-                                <option value="all">All</option>
-                                <option value="staff1">Staff1</option>
-                                <option value="staff2">Staff2</option>
-                            </select>
-                        </th>
-                        <th>Month
-                            <select class="form-control">
-                                <option value="all">January</option>
-                                <option value="staff1">February</option>
-                                <option value="staff2">March</option>
-                            </select>
-                        </th>
-                        <th>From Date
-                            <input class="form-control" type="date">
-                        </th>
-                        <th>To Date
-                            <input class="form-control" type="date">
-                        </th>
-                        <th>
-                            <button class="btn btn-primary">Search</button>
-                        </th>
-                    </tr>
+                    <form action="" method="get">
+                        <tr class="filters">
+                            {% if user_role == 'admin' %}
+                            <th>Staff
+                                <select name="staff" class="form-control">
+                                    <option value="all">All</option>
+                                    <option value="staff1">Staff1</option>
+                                    <option value="staff2">Staff2</option>
+                                </select>
+                            </th>
+                            {% endif %}
+                            <th>Month
+                                <select name="month" class="form-control">
+                                    <option value="all">January</option>
+                                    <option value="staff1">February</option>
+                                    <option value="staff2">March</option>
+                                </select>
+                            </th>
+                            <th>From Date
+                                <input name="from_data" class="form-control" type="date">
+                            </th>
+                            <th>To Date
+                                <input name="to_date" class="form-control" type="date">
+                            </th>
+                            <th>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </th>
+                        </tr>
+                    </form>
                 </thead>
             </table>
 
@@ -114,7 +119,7 @@
                     <th>Glass Case 2</th>
                     <th>Premium Case</th>
                     <th>Total</th>
-                    <th></th>
+                    <th>{% if user_role == 'admin' %}<button class="btn btn-primary">Add Product</button>{% endif %}</th>
                 </tr>
             </thead>
 
@@ -215,6 +220,7 @@
     </section>
 </div>
 
+{% endwith %}
 
 <script>
     function editdata() {

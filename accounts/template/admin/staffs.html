@@ -19,25 +19,29 @@
         <div class="row team-items">
             {% for data in staffs %}
             <div class="col-md-4 single-item">
-                <a href="edit-staff-{{data.id}}">
-                    <div class="item">
-                        <div class="thumb">
-                            <img class="img-fluid" src="media/{{data.profile_picture}}" alt="Thumb">
-                            <div class="overlay">
-                                <h4>{{data.email}}</h4>
-                                <p>
-                                    {{data.address}}
-                                </p>
-                                <p>Active: <input type="checkbox" {% if data.status %}checked{% endif %} id="switch" /><label for="switch">Toggle</label></p>
-                                <p>Access: <input type="checkbox" {% if data.status %}checked{% endif %} id="switch" /><label for="switch">Toggle</label></p>
-                                <p>{% if data.attachment %}<a href="{{data.attachment.url}}" download="">Attachment</a>{% endif %}</p>
-                            </div>
-                        </div>
-                        <div class="info">
-                            <h4>{{data.firstName}}</h4>
-                            <span>{{data.phoneNumber}}</span>
+
+                <div class="item">
+                    <div class="thumb">
+                        <img class="img-fluid" src="media/{{data.profile_picture}}" alt="Thumb">
+                        <div class="overlay">
+                            <h4>{{data.email}}</h4>
+                            <p>
+                                {{data.address}}
+                            </p>
+                            <p>Shift: {{data.shift}}</p>
+                            <p>Active: <input type="checkbox" {% if data.status %}checked{% endif %}
+                                    id="active" /><label for="switch">Toggle</label></p>
+                            <p>Access: <input type="checkbox" {% if data.status %}checked{% endif %}
+                                    id="access" /><label for="switch">Toggle</label></p>
+                            <p>{% if data.attachment %}<a href="{{data.attachment.url}}" download="">Attachment</a>{% endif %}</p>
                         </div>
                     </div>
+                    <a href="edit-staff-{{data.id}}">
+                    <div class="info">
+                        <h4>{{data.firstName}}</h4>
+                        <span>{{data.phoneNumber}}</span>
+                    </div>
+                </div>
                 </a>
             </div>
             {% endfor %}

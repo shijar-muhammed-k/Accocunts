@@ -12,6 +12,7 @@ class Staffs(models.Model):
     attachment = models.FileField(upload_to='attachments')
     status = models.BooleanField(default=True)
     access = models.BooleanField(default=True)
+    shift = models.CharField(max_length=20)
 
     class Meta:
         db_table = 'staffs'

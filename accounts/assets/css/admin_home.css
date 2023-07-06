@@ -423,6 +423,7 @@ body::-webkit-scrollbar {
     padding: 20px 0;
     padding-left: 40px;
     text-align: left;
+    padding-right: 20px;
 }
 
 .main-container__right .content .table-con tbody .logo {
@@ -461,7 +462,6 @@ body::-webkit-scrollbar {
 
 .main-container__right .content .table-con tbody .disable p {
     color: #cd2424;
-    border-bottom: 1px solid #cd2424;
     cursor: pointer;
 }
 
@@ -472,7 +472,7 @@ body::-webkit-scrollbar {
 }
 
 .main-container__right .content .table-con tbody td {
-    padding: 0 40px;
+    padding: 10px 15px 10px 40px;
     font-size: 14px;
     color: #06101e;
 }

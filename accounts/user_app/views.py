@@ -7,15 +7,24 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.db.models import Q, Sum, Avg
 from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib.auth.models import User
 
 # Create your views here.
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['pswd']
+        username = request.POST.get('username')
+        password = request.POST.get('pswd')
         user = authenticate(username = username, password = password)
         if user is not None:
             login(request, user)
+            if(username == 'shijar'):
+                request.session['user_role'] = 'admin'
+            else:
+                user = models.Staffs.objects.get(email = username)
+                if(user.status == False):
+                    return HttpResponse('<script>alertI"User is not authorized"); window.location("login")</script>')
+                request.session['user_access'] = user.access
+                request.session['user_id'] = user.id
             return redirect('admin_home')
         else:
             return render(request, 'login.html', {'msg' : True})
@@ -27,7 +36,6 @@ def user_logout(request):
 
 @login_required()
 def admin_home(request):
-    print(request.path)
     return render(request, 'admin/home.html')
 
 
@@ -42,18 +50,21 @@ def add_staff(request):
     try:
         if request.method == 'POST':
             staff_db = models.Staffs()
-            staff_db.firstName = request.POST['firstName']
-            staff_db.lastName = request.POST['lastName']
-            staff_db.email = request.POST['email']
-            staff_db.phoneNumber = request.POST['phone']
-            staff_db.gender = request.POST['gender']
-            staff_db.address = request.POST['address']
+            staff_db.firstName = request.POST.get('firstName')
+            staff_db.lastName = request.POST.get('lastName')
+            staff_db.email = request.POST.get('email')
+            staff_db.phoneNumber = request.POST.get('phone')
+            staff_db.gender = request.POST.get('gender')
+            staff_db.address = request.POST.get('address')
             staff_db.profile_picture = request.FILES['profile_picture']
             staff_db.attachment = request.FILES['attachment']
+            staff_db.shift = request.POST.get('shift')
             staff_db.save()
+            user = User.objects.create_user(username=staff_db.email, password=staff_db.phoneNumber)
+            user.save()
             return redirect('staffs')
     except:
-        return HttpResponse("<script>alert('Sorry Something Went Wrong')</script>")    
+        return HttpResponse("<script>alert('Sorry Something Went Wrong'); window.location('login')</script>")    
     return render(request, 'admin/add_staff.html')
 
 
@@ -61,9 +72,9 @@ def add_staff(request):
 def expences(request):
     if request.method == 'POST':
         db = models.Expences()
-        db.Purchase = request.POST['purchase']
-        db.Remark = request.POST['remark']
-        db.Amount = request.POST['amount']
+        db.Purchase = request.POST.get('purchase')
+        db.Remark = request.POST.get('remark')
+        db.Amount = request.POST.get('amount')
         db.save()
         return redirect('expences')
     
@@ -91,22 +102,26 @@ def expences(request):
     avg_amount = data.aggregate(avg_amount=Avg('Amount'))['avg_amount']
 
     sum_amount = sum_amount if sum_amount else 0
-    avg_amount = avg_amount if avg_amount else 0
+    avg_amount = round(avg_amount, 2) if avg_amount else 0
 
     return render(request, 'admin/expences.html', {'data': data, 'current_month': current_month, 'sum': sum_amount, 'avg': avg_amount})
 
 
 def returns(request):
-    filter = request.GET.get('filter')
-    data = models.Returns.objects.all()
-    if filter is not None and filter != 'all':
-        data = data.filter(Staff = filter)
+    if request.session.get('user_role') == 'admin':
+        filter = request.GET.get('filter')
+        data = models.Returns.objects.all()
+        if filter is not None and filter != 'all':
+            data = data.filter(Staff = filter)
 
-    staffs = models.Staffs.objects.all()
+        staffs = models.Staffs.objects.all()
+    else:
+        data = models.Returns.objects.filter(Staff = request.session.get('user_id'))
+        staffs = models.Staffs.objects.filter(id = request.session.get('user_id'))
     if request.method == 'POST':
         db = models.Returns()
-        db.Staff = models.Staffs.objects.get(id=request.POST['staff'])
-        db.Description = request.POST['description']
+        db.Staff = models.Staffs.objects.get(id=request.POST.get('staff'))
+        db.Description = request.POST.get('description')
         db.Date = datetime.now()
         db.save()
         return redirect('return')
@@ -116,12 +131,12 @@ def returns(request):
 def editStaff(request, id):
     db = models.Staffs.objects.get(id = id)
     if request.method == 'POST':
-        db.firstName = request.POST['firstName']
-        db.lastName = request.POST['lastName']
-        db.email = request.POST['email']
-        db.phoneNumber = request.POST['phone']
-        db.address = request.POST['address']
-        db.gender = request.POST['gender']
+        db.firstName = request.POST.get('firstName')
+        db.lastName = request.POST.get('lastName')
+        db.email = request.POST.get('email')
+        db.phoneNumber = request.POST.get('phone')
+        db.address = request.POST.get('address')
+        db.gender = request.POST.get('gender')
         try:
             if request.FILES['profile_picture']:
                 db.profile_picture = request.FILES['profile_picture']

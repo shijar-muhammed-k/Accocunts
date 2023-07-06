@@ -38,7 +38,7 @@ table a {
     color: #fff;
     background: #000;
     font-size: 20px;
-    width: 30px;
+    /* width: 30px; */
 }
 
 .row::before {

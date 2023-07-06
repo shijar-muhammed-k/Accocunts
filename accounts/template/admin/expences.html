@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/expences.css' %}">
 </head>
 
-<div class="content">
+<div class="content" style="padding: 0 50px 0 0;">
     <div class="cards-con">
         <div class="title">
             <div class="main">Summary</div>
@@ -47,20 +47,7 @@
                 <form action="" method="get">
                     <table class="table">
                         <thead>
-                            <tr class="filters">
-                                <th>From Date
-                                    <input id="assigned-user-filter" name="fromDate" value="" type='date' class="form-control">
-                                </th>
-                                <th>To Date
-                                    <input id="assigned-user-filter" type='date' name="toDate" value="" class="form-control">
-                                </th>
-                                <th>Search
-                                    <input id="assigned-user-filter" type='text' name="search" value=""  class="form-control">
-                                </th>
-                                <th>
-                                    <input type="submit" class="btn btn-primary" value="Search">
-                                </th>
-                            </tr>
+                            <form action=""></form>
                         </thead>
                     </table>
                 </form>
@@ -70,11 +57,11 @@
         <table>
             <thead>
                 <tr>
-                    <th style="max-width: 350px; min-width: 300px;">Date</th>
-                    <th style="max-width: 350px; min-width: 300px;">Purchase</th>
-                    <th style="max-width: 350px; min-width: 300px;">Remark</th>
-                    <th style="max-width: 350px; min-width: 300px;">Amount</th>
-                    <th style="max-width: 350px; min-width: 300px;"></th>
+                    <th style="max-width: 250px; min-width: 200px;">Date</th>
+                    <th style="max-width: 250px; min-width: 200px;">Purchase</th>
+                    <th style="max-width: 250px; min-width: 200px;">Remark</th>
+                    <th style="max-width: 250px; min-width: 200px;">Amount</th>
+                    <th style="max-width: 250px; min-width: 200px;"></th>
                 </tr>
             </thead>
 
@@ -86,20 +73,20 @@
                 {% else %}
                 {% for data in data %}
                 <tr class="row">
-                    <td class="date" style="max-width: 350px; min-width: 300px;">
+                    <td class="date" style="max-width: 250px; min-width: 200px;">
                         <p>{{data.Date}}</p>
                     </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                    <td class="name" style="max-width: 250px; min-width: 200px;">
                         <p>{{data.Purchase}}</p>
                     </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                    <td class="name" style="max-width: 250px; min-width: 200px;">
                         <p>{{data.Remark}}</p>
                     </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
+                    <td class="name" style="max-width: 250px; min-width: 200px;">
                         <p>{{data.Amount}}</p>
                     </td>
-                    <td class="name" style="max-width: 350px; min-width: 300px;">
-                        <p>Edit</p>
+                    <td class="name" style="max-width: 250px; min-width: 200px;">
+                        <p><a onclick="itemCliked({{forloop.counter}})"> Edit </a></p>
                     </td>
                 </tr>
                 {% endfor %}
@@ -108,42 +95,46 @@
         </table>
     </div>
     <!--table container -->
+    {% for data in data %}
+    <div class="content expand_details" id="edit_expence_container{{forloop.counter}}">
+        <head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        </head>
+        <button onclick="closeBtn({{forloop.counter}})">&times</button>
+        <section class="contact-from pt-4" style="border: 1px solid; background: #fff;">
 
-    <div class="content expand_details" id="expand_details">
-        <button onclick="closeBtn()">&times</button>
-        <div class="table-con">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="max-width: 350px; min-width: 300px;">Purchase</th>
-                        <th style="max-width: 350px; min-width: 300px;">Remark</th>
-                        <th style="max-width: 350px; min-width: 300px;">Amount</th>
-                        <th style="max-width: 350px; min-width: 300px;"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for data in data %}
-                    <tr class="row">
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>{{data.Purchace}}</p>
-                        </td>
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>{{data.Remark}}</p>
-                        </td>
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>{{data.Amount}}</p>
-                        </td>
-                        <td class="name" style="max-width: 350px; min-width: 300px;">
-                            <p>Edit</p>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <!--table container -->
+            <body>
+                <div class="container">
+                    <br />
+                    <br />
+                    <h2 align="center">Edit Expence</h2>
+                    <div class="form-group">
+                        <form name="add_name" id="add_name" action="" method="post">
+                            {% csrf_token %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dynamic_field">
+                                    <tr>
+                                        <td><input type="date" value="{{data.Date}}" name="purchase" placeholder="Purchase"
+                                                class="form-control name_list" /></td>
+                                        <td><input type="text" value="{{data.Purchase}}" name="purchase" placeholder="Purchase"
+                                            class="form-control name_list" /></td>
+                                        <td><input type="text" value="{{data.Remark}}" name="remark" placeholder="Remark"
+                                                class="form-control name_list" /></td>
+                                        <td><input type="text" value="{{data.Amount}}" name="amount" placeholder="Amount"
+                                                class="form-control name_list" /></td>
+                                    </tr>
+                                </table>
+                                <input type="submit" name="submit" id="submit" class="btn btn-info" value="Edit" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </section>
     </div>
+    {% endfor %}
+
 
     <div class="content expand_details" id="add_expence_container">
 
@@ -169,12 +160,14 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dynamic_field">
                                     <tr>
+                                        <td><input type="date" name="date" placeholder="Purchase"
+                                            class="form-control name_list" /></td>
                                         <td><input type="text" name="purchase" placeholder="Purchase"
-                                                class="form-control name_list" /></td>
+                                            class="form-control name_list" /></td>
                                         <td><input type="text" name="remark" placeholder="Remark"
-                                                class="form-control name_list" /></td>
+                                            class="form-control name_list" /></td>
                                         <td><input type="text" name="amount" placeholder="Amount"
-                                                class="form-control name_list" /></td>
+                                            class="form-control name_list" /></td>
                                     </tr>
                                 </table>
                                 <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
@@ -216,10 +209,11 @@
 </div>
 
 <script>
-    function itemCliked() {
-        document.getElementById('expand_details').style.display = "block";
+    function itemCliked(id) {
+        document.getElementById(`edit_expence_container${id}`).style.display = "block";
     }
-    function closeBtn() {
+    function closeBtn(id=1) {
+        document.getElementById(`edit_expence_container${id}`).style.display = "none";
         document.getElementById('add_expence_container').style.display = "none";
         document.getElementById('expand_details').style.display = "none";
     }

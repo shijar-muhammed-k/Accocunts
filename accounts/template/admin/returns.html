@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{% static 'css/expences.css' %}">
 </head>
 
-<div class="content">
+<div class="content" style="padding: 0 50px 0 0;">  
+    {% with user_role=request.session.user_role %}
 
     <div class="table-con" style="overflow: hidden;">
         <div class="heading">
@@ -19,6 +20,7 @@
                 <table class="table">
                     <thead>
                         <tr class="filters">
+                            {% if user_role == 'admin' %}
                             <th>Staff
                                 <select name="filter" class="form-control">
                                     <option value="all">All</option>
@@ -30,6 +32,7 @@
                             <th>
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </th>
+                            {% endif %}
                             <th>
                                 <button class="btn btn-primary" onclick="add_return()">Add Return</button>
                             </th>
@@ -66,18 +69,32 @@
             </tbody>
         </table>
     </div>
+
+    
     <!--table container -->
     {% for data in data %}
-    <div class="content expand_details" id="expand_details{{data.id}}">
-        <button onclick="closeBtn({{data.id}})">&times</button>
+    <div class="content expand_details" id="expand_details{{forloop.counter}}">
+        <button onclick="closeBtn({{forloop.counter}})">&times</button>
         <div class="show_details" style="width: 50vw; left: 50%; top: 50%; position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; gap: 10px;">
-            <input type="text" readonly id="selected_staff" value="{{data.Staff.firstName}}" class="form-control" style="width: 250px; text-align: center;">
-            <textarea class="form-control" cols="30" id="selected_description" rows="15">{{data.Description}}</textarea>
+            <form action="edit-return-{{data.id}}" method="post">
+                {% csrf_token %}
+                {% if user_role == 'admin' %}
+                <select name="staff" class="form-control" style="width: 250px; text-align: center;">
+                    {% for data in staffs %}
+                    <option value="{{data.id}}">{{data.firstName}}</option>
+                    {% endfor %}    
+                </select>
+                {% else %}
+                <input type="text" readonly id="selected_staff" value="{{data.Staff.firstName}}" class="form-control" style="width: 250px; text-align: center;">
+                {% endif %}
+                <textarea class="form-control" cols="30" id="selected_description" rows="15">{{data.Description}}</textarea>
+                <button type="submit" class="btn btn-primary" style="position: static; width: 200px;">Edit</button>
+            </form>
         </div>
     </div>
     {% endfor %}
 
-    <div class="content expand_details" id="add_return">
+    <div class="content expand_details" id="add_return" style="top: 100% !important;">
         <button onclick="closeBtn()" style="position: absolute; top: 15%; right: 5%;">&times</button>
         <div class="show_details" style="width: 50vw; left: 50%; top: 50%; position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; gap: 10px;">
             <form action="" method="post">
@@ -95,8 +112,11 @@
 
 </div>
 
+{% endwith %}
+
 <script>
     function itemCliked(id) {
+        console.log(id)
         document.getElementById(`expand_details${id}`).style.display = "block";
     }
     function closeBtn(id=0) {
