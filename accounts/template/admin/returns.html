@@ -53,6 +53,11 @@
             </thead>
 
             <tbody>
+                {% if data|length == 0 %}
+                <tr>
+                    <td colspan="3" align="center">No Record Found</td>
+                </tr>
+                {% else %}
                 {% for data in data %}
                 <tr class="row">
                     <td class="date" style="max-width: 350px; min-width: 300px;">
@@ -66,6 +71,7 @@
                     </td>
                 </tr>
                 {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>
@@ -80,21 +86,21 @@
                 {% csrf_token %}
                 {% if user_role == 'admin' %}
                 <select name="staff" class="form-control" style="width: 250px; text-align: center;">
-                    {% for data in staffs %}
-                    <option value="{{data.id}}">{{data.firstName}}</option>
+                    {% for staff in staffs %}
+                    <option value="{{staff.id}}" {% if staff.id == data.Staff.id %}selected {% endif %}>{{staff.firstName}}</option>
                     {% endfor %}    
                 </select>
                 {% else %}
                 <input type="text" readonly id="selected_staff" value="{{data.Staff.firstName}}" class="form-control" style="width: 250px; text-align: center;">
                 {% endif %}
-                <textarea class="form-control" cols="30" id="selected_description" rows="15">{{data.Description}}</textarea>
+                <textarea class="form-control" cols="30" name="description" id="selected_description" rows="15">{{data.Description}}</textarea>
                 <button type="submit" class="btn btn-primary" style="position: static; width: 200px;">Edit</button>
             </form>
         </div>
     </div>
     {% endfor %}
 
-    <div class="content expand_details" id="add_return" style="top: 100% !important;">
+    <div class="content expand_details" id="add_return">
         <button onclick="closeBtn()" style="position: absolute; top: 15%; right: 5%;">&times</button>
         <div class="show_details" style="width: 50vw; left: 50%; top: 50%; position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; gap: 10px;">
             <form action="" method="post">

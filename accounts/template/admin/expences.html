@@ -47,7 +47,22 @@
                 <form action="" method="get">
                     <table class="table">
                         <thead>
-                            <form action=""></form>
+                            <form action="">
+                                <tr class="filters">
+                                    <th>From Date
+                                        <input id="assigned-user-filter" name="fromDate" value="" type='date' class="form-control">
+                                    </th>
+                                    <th>To Date
+                                        <input id="assigned-user-filter" type='date' name="toDate" value="" class="form-control">
+                                    </th>
+                                    <th>Search
+                                        <input id="assigned-user-filter" type='text' name="search" value=""  class="form-control">
+                                    </th>
+                                    <th>
+                                        <input type="submit" class="btn btn-primary" value="Search">
+                                    </th>
+                                </tr>
+                            </form>
                         </thead>
                     </table>
                 </form>
@@ -111,12 +126,12 @@
                     <br />
                     <h2 align="center">Edit Expence</h2>
                     <div class="form-group">
-                        <form name="add_name" id="add_name" action="" method="post">
+                        <form name="add_name" id="add_name" action="edit_expence-{{data.id}}" method="post">
                             {% csrf_token %}
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dynamic_field">
                                     <tr>
-                                        <td><input type="date" value="{{data.Date}}" name="purchase" placeholder="Purchase"
+                                        <td><input type="date" value="{{data.Date}}" required name="date" placeholder="Purchase"
                                                 class="form-control name_list" /></td>
                                         <td><input type="text" value="{{data.Purchase}}" name="purchase" placeholder="Purchase"
                                             class="form-control name_list" /></td>
@@ -161,7 +176,7 @@
                                 <table class="table table-bordered" id="dynamic_field">
                                     <tr>
                                         <td><input type="date" name="date" placeholder="Purchase"
-                                            class="form-control name_list" /></td>
+                                            class="form-control name_list" required/></td>
                                         <td><input type="text" name="purchase" placeholder="Purchase"
                                             class="form-control name_list" /></td>
                                         <td><input type="text" name="remark" placeholder="Remark"

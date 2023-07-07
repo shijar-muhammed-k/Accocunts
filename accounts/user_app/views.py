@@ -72,6 +72,7 @@ def add_staff(request):
 def expences(request):
     if request.method == 'POST':
         db = models.Expences()
+        db.Date = request.POST.get('date')
         db.Purchase = request.POST.get('purchase')
         db.Remark = request.POST.get('remark')
         db.Amount = request.POST.get('amount')
@@ -97,6 +98,8 @@ def expences(request):
         current_month = f' - {toDate}'
     if search:
         data = data.filter(Q(Purchase__icontains=search))
+
+    data = data.order_by('Date')
     
     sum_amount = data.aggregate(sum_amount=Sum('Amount'))['sum_amount']
     avg_amount = data.aggregate(avg_amount=Avg('Amount'))['avg_amount']
@@ -151,3 +154,44 @@ def editStaff(request, id):
         return redirect('staffs')
     
     return render(request, 'admin/add_staff.html', {'data' : db})
+
+
+def editExpence(request, id):
+    db = models.Expences.objects.get(id = id)
+    db.Date = request.POST.get('date')
+    db.Purchase = request.POST.get('purchase')
+    db.Remark = request.POST.get('remark')
+    db.Amount = request.POST.get('amount')
+    db.save()
+    return redirect('expences')
+
+
+def editReturn(request, id):
+    db = models.Returns.objects.get(id=id)
+    db.Staff = models.Staffs.objects.get(id = request.POST.get('staff'))
+    db.Description = request.POST.get('description')
+    db.save()
+    return redirect('return')
+
+
+def toggleActive(request):
+    staff = models.Staffs.objects.get(id = request.GET.get('id'))
+    if (request.GET.get('status') == 'true'):
+        value = True
+    else:
+        value = False
+    staff.status = value
+    staff.save()
+
+    return redirect('staffs')
+
+def toggleAccess(request):
+    staff = models.Staffs.objects.get(id = request.GET.get('id'))
+    if (request.GET.get('status') == 'true'):
+        value = True
+    else:
+        value = False
+    staff.access = value
+    staff.save()
+
+    return redirect('staffs')

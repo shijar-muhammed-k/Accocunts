@@ -29,10 +29,10 @@
                                 {{data.address}}
                             </p>
                             <p>Shift: {{data.shift}}</p>
-                            <p>Active: <input type="checkbox" {% if data.status %}checked{% endif %}
-                                    id="active" /><label for="switch">Toggle</label></p>
-                            <p>Access: <input type="checkbox" {% if data.status %}checked{% endif %}
-                                    id="access" /><label for="switch">Toggle</label></p>
+                            <p>Active: <input onchange="activeToggle({{data.id}})" type="checkbox" name="active{{data.id}}" {% if data.status %}checked{% endif %}
+                                    id="active{{data.id}}" /><label for="active{{data.id}}">Toggle</label></p>
+                            <p>Access: <input onchange="accessToggle({{data.id}})" type="checkbox" name="access{{data.id}}" {% if data.access %}checked{% endif %}
+                                    id="access{{data.id}}" /><label for="access{{data.id}}">Toggle</label></p>
                             <p>{% if data.attachment %}<a href="{{data.attachment.url}}" download="">Attachment</a>{% endif %}</p>
                         </div>
                     </div>
@@ -47,5 +47,15 @@
             {% endfor %}
         </div>
     </div>
+    <script>
+        function activeToggle(id, event) {
+            value = document.getElementById(`active${id}`).checked;
+            window.location.href = `toggle-active-status/?id=${id}&status=${value}`
+        }
+        function accessToggle(id, event) {
+            value = document.getElementById(`access${id}`).checked;
+            window.location.href = `toggle-access-status/?id=${id}&status=${value}`
+        }
+    </script>
 </section>
 {% endblock %}
