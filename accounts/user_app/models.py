@@ -14,6 +14,9 @@ class Staffs(models.Model):
     access = models.BooleanField(default=True)
     shift = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.firstName
+
     class Meta:
         db_table = 'staffs'
 
@@ -23,6 +26,9 @@ class Expences(models.Model):
     Remark = models.CharField(max_length=250)
     Amount = models.CharField(max_length=10)
     Date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.Purchase
 
     class Meta:
         db_table = 'expenses'
@@ -35,3 +41,16 @@ class Returns(models.Model):
 
     class Meta:
         db_table = 'Returns'
+
+
+class Products(models.Model):
+    name = models.CharField(max_length=100)
+    sellingPrice = models.IntegerField()
+    purchacePrice = models.IntegerField()
+    vendor = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        db_table = 'products'

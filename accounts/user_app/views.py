@@ -36,7 +36,9 @@ def user_logout(request):
 
 @login_required()
 def admin_home(request):
-    return render(request, 'admin/home.html')
+    products = models.Products.objects.all()
+    staffs = models.Staffs.objects.all()
+    return render(request, 'admin/home.html', {'products': products, 'staffs': staffs})
 
 
 @login_required()
@@ -195,3 +197,14 @@ def toggleAccess(request):
     staff.save()
 
     return redirect('staffs')
+
+
+def addProduct(request):
+    db = models.Products()
+    db.name = request.POST.get('name')
+    db.sellingPrice = int(request.POST.get('selling_price'))
+    db.purchacePrice = int(request.POST.get('purchace_price'))
+    db.vendor = request.POST.get('vendor')
+    db.save()
+
+    return redirect('admin_home')

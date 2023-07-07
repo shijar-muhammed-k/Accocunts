@@ -84,8 +84,9 @@
                             <th>Staff
                                 <select name="staff" class="form-control">
                                     <option value="all">All</option>
-                                    <option value="staff1">Staff1</option>
-                                    <option value="staff2">Staff2</option>
+                                    {% for staff in staffs %}
+                                    <option value="{{staff.id}}">{{staff.firstName}}</option>  
+                                    {% endfor %}
                                 </select>
                             </th>
                             {% endif %}
@@ -115,11 +116,11 @@
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Glass Case 1</th>
-                    <th>Glass Case 2</th>
-                    <th>Premium Case</th>
+                    {% for product in products %}
+                    <th>{{product.name}}</th>
+                    {% endfor %}
                     <th>Total</th>
-                    <th>{% if user_role == 'admin' %}<button class="btn btn-primary">Add Product</button>{% endif %}</th>
+                    <th>{% if user_role == 'admin' %}<button onclick="addProduct()" class="btn btn-primary">Add Product</button>{% endif %}</th>
                 </tr>
             </thead>
 
@@ -220,15 +221,70 @@
     </section>
 </div>
 
+<div class="content expand_details" id="addProduct">
+    <button onclick="closeBtn()" style="position: absolute; top: 15%; right: 5%;">&times</button>
+    <section class="contact-from pt-4" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff; border: 1px solid; padding: 20px;">
+        <div class="container">
+    
+            <div class="row mt-5">
+                <div class="mx-auto">
+                    <div class="form-wrapper">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Add Product</h4>
+                            </div>
+                        </div>
+                        <form _lpchecked="1" action="addProduct" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" name="name" placeholder="Name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="purchace_price" placeholder="Purchase Price">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="selling_price" placeholder="Selling Price">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="vendor" placeholder="Vendor">
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary" style="position: inherit;">Add Product</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </section>
+</div>
+
 {% endwith %}
 
 <script>
+    function addProduct() {
+        document.getElementById('addProduct').style.display = 'block'
+    }
     function editdata() {
         document.getElementById('editdata').style.display = 'block'
     }
 
     function closeBtn() {
         document.getElementById('editdata').style.display = 'none'
+        document.getElementById('addProduct').style.display = 'none'
     }
 </script>
 

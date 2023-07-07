@@ -17,4 +17,5 @@ urlpatterns = [
     path('edit-return-<id>', views.editReturn, name='edit-return'),
     path('toggle-active-status/', views.toggleActive, name='toggle-active'),
     path('toggle-access-status/', views.toggleAccess, name='toggle-access'),
+    path('addProduct', views.addProduct, name='addProduct'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
