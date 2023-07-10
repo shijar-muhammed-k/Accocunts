@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class Staffs(models.Model):
@@ -27,6 +28,11 @@ class Expences(models.Model):
     Amount = models.CharField(max_length=10)
     Date = models.DateField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        if not self.id and not self.Date:
+            self.Date = self.Date.isoformat()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.Purchase
 
@@ -38,6 +44,9 @@ class Returns(models.Model):
     Date = models.DateField(auto_now_add=True)
     Staff  = models.ForeignKey(Staffs, on_delete=models.CASCADE)
     Description = models.TextField()
+
+    def __str__(self):
+        return self.Date.isoformat()
 
     class Meta:
         db_table = 'Returns'
@@ -54,3 +63,16 @@ class Products(models.Model):
     
     class Meta:
         db_table = 'products'
+
+
+class Sales(models.Model):
+    Date = models.DateField(auto_now_add=True)
+    Product = models.ForeignKey(Products, on_delete=models.SET('Deleted'))
+    NumberOfSales = models.IntegerField(null=True, blank=True)
+    Staff = models.ForeignKey(Staffs, on_delete=models.SET('Deleted'))
+                              
+    class Meta:
+        db_table = 'Sales'
+
+    def __str__(self):
+        return self.Date.isoformat()

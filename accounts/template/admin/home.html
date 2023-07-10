@@ -184,29 +184,32 @@
                                 <h4>Edit Sales</h4>
                             </div>
                         </div>
-                        <form _lpchecked="1">
+                        <form action="" method="post" _lpchecked="1">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <input type="date" class="form-control">
+                                        <input name="date" type="date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Glass Case 1">
+                                        <input type="text" name="glass" class="form-control" placeholder="Glass Case 1">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Glass Case 2">
+                                        <input type="text" name="test" class="form-control" placeholder="Glass Case 2">
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Premium Case">
+                                        <input type="text" name="pre" class="form-control" placeholder="Premium Case">
                                     </div>
                                 </div>
+
+                                <input type="text" hidden name="staff" value=1 id="">
     
                             </div>
                             <div class="mt-3">

@@ -38,7 +38,27 @@ def user_logout(request):
 def admin_home(request):
     products = models.Products.objects.all()
     staffs = models.Staffs.objects.all()
-    return render(request, 'admin/home.html', {'products': products, 'staffs': staffs})
+    sales = models.Sales.objects.all()
+
+    if request.method == 'POST':
+        values = dict(request.POST.items())
+        for product in products:
+            db = models.Sales()
+            db.Product = product
+            db.NumberOfSales = values[product.name]
+            db.Staff = models.Staffs.objects.get(id = values['staff'])
+            db.save()
+
+    if request.method == 'PATCH':
+        values = dict(request.POST.items())
+        for product in products:
+            db = models.Sales.objects.get(id = request.PATCH.get('product_id'))
+            db.Product = product
+            db.NumberOfSales = values[product.name]
+            db.Staff = models.Staffs.objects.get(id = values['staff'])
+            db.save()
+
+    return render(request, 'admin/home.html', {'products': products, 'staffs': staffs, 'sales': sales})
 
 
 @login_required()
@@ -74,7 +94,7 @@ def add_staff(request):
 def expences(request):
     if request.method == 'POST':
         db = models.Expences()
-        db.Date = request.POST.get('date')
+        db.Date = toDate(request.POST.get('date')).isoformat()
         db.Purchase = request.POST.get('purchase')
         db.Remark = request.POST.get('remark')
         db.Amount = request.POST.get('amount')
