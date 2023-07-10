@@ -94,7 +94,7 @@ def add_staff(request):
 def expences(request):
     if request.method == 'POST':
         db = models.Expences()
-        db.Date = toDate(request.POST.get('date')).isoformat()
+        db.Date = (request.POST.get('date')).isoformat()
         db.Purchase = request.POST.get('purchase')
         db.Remark = request.POST.get('remark')
         db.Amount = request.POST.get('amount')
