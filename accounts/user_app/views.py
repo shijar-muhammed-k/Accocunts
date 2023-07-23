@@ -13,6 +13,8 @@ import calendar
 
 # Create your views here.
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('admin_home')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('pswd')
@@ -32,6 +34,7 @@ def user_login(request):
             return render(request, 'login.html', {'msg' : True})
     return render(request, 'login.html')
 
+@login_required()
 def user_logout(request):
     logout(request)
     return redirect('login')
@@ -156,6 +159,7 @@ def expences(request):
     return render(request, 'admin/expences.html', {'data': data, 'current_month': current_month, 'sum': sum_amount, 'avg': avg_amount})
 
 
+@login_required()
 def returns(request):
     if request.session.get('user_role') == 'admin':
         filter = request.GET.get('filter')
@@ -177,6 +181,7 @@ def returns(request):
     return render(request, 'admin/returns.html', {'staffs': staffs, 'data': data,})
 
 
+@login_required()
 def editStaff(request, id):
     db = models.Staffs.objects.get(id = id)
     if request.method == 'POST':
@@ -202,6 +207,7 @@ def editStaff(request, id):
     return render(request, 'admin/add_staff.html', {'data' : db})
 
 
+@login_required()
 def editExpence(request, id):
     db = models.Expences.objects.get(id = id)
     db.Date = request.POST.get('date')
@@ -212,6 +218,7 @@ def editExpence(request, id):
     return redirect('expences')
 
 
+@login_required()
 def editReturn(request, id):
     db = models.Returns.objects.get(id=id)
     db.Staff = models.Staffs.objects.get(id = request.POST.get('staff'))
@@ -220,6 +227,7 @@ def editReturn(request, id):
     return redirect('return')
 
 
+@login_required()
 def toggleActive(request):
     staff = models.Staffs.objects.get(id = request.GET.get('id'))
     if (request.GET.get('status') == 'true'):
@@ -231,6 +239,7 @@ def toggleActive(request):
 
     return redirect('staffs')
 
+@login_required()
 def toggleAccess(request):
     staff = models.Staffs.objects.get(id = request.GET.get('id'))
     if (request.GET.get('status') == 'true'):
@@ -243,6 +252,7 @@ def toggleAccess(request):
     return redirect('staffs')
 
 
+@login_required()
 def addProduct(request):
     db = models.Products()
     db.name = request.POST.get('name')
