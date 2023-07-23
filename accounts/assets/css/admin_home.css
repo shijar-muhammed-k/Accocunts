@@ -371,7 +371,7 @@ body::-webkit-scrollbar {
 }
 
 .main-container__right .content .cards-con .cards .card .content div {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .main-container__right .content .cards-con .cards .card .content div:last-of-type {

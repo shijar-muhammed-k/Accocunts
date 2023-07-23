@@ -8,6 +8,7 @@
 </head>
 {% with user_role=request.session.user_role %}
 <div class="content" style="padding: 0 50px 0 0;">
+    {% if user_role == "admin" %}
     <div class="cards-con">
         <div class="title">
             <div class="main">Summary</div>
@@ -19,57 +20,17 @@
                 <div class="rec-1"></div>
                 <div class="rec-2"></div>
                 <div class="content">
-                    <div class="name">Total Summary - 10/05/2023</div>
-                    <div class="name">Total Sale(Psc): 5000Rs</div>
-                    <div class="pin">Total Sale(Rate): 5000Rs</div>
-                    <div class="pin">Total Expence: 2000Rs</div>
-                    <div class="pin">Average Expence: 2000Rs</div>
-                    <div class="pin"><a href="">View More</a></div>
-                </div>
-            </div>
-
-            <div class="card card-2">
-                <div class="rec-1"></div>
-                <div class="rec-2"></div>
-                <div class="content">
-                    <div class="name">My Summary - 10/05/2023</div>
-                    <div class="name">Total Sale(Psc): 5000Rs</div>
-                    <div class="pin">Total Sale(Rate): 5000Rs</div>
-                    <div class="pin">Total Expence: 2000Rs</div>
-                    <div class="pin">Average Expence: 2000Rs</div>
-                    <div class="pin"><a href="">View More</a></div>
-                </div>
-            </div>
-
-            <div class="card card-3">
-                <div class="rec-1"></div>
-                <div class="rec-2"></div>
-                <div class="content">
-                    <div class="name">Staff 1 Summary - 10/05/2023</div>
-                    <div class="name">Total Sale(Psc): 5000Rs</div>
-                    <div class="pin">Total Sale(Rate): 5000Rs</div>
-                    <div class="pin">Total Expence: 2000Rs</div>
-                    <div class="pin">Average Expence: 2000Rs</div>
-                    <div class="pin"><a href="">View More</a></div>
-                </div>
-            </div>
-
-            <div class="card card-2">
-                <div class="rec-1"></div>
-                <div class="rec-2"></div>
-                <div class="content">
-                    <div class="name">Staff 2 Summary - 10/05/2023</div>
-                    <div class="name">Total Sale(Psc): 5000Rs</div>
-                    <div class="pin">Total Sale(Rate): 5000Rs</div>
-                    <div class="pin">Total Expence: 2000Rs</div>
-                    <div class="pin">Average Expence: 2000Rs</div>
-                    <div class="pin"><a href="">View More</a></div>
+                    <div class="name">{{current_month_full}}</div>
+                    <div class="name">Total Sale(Psc): {{card_data.total_psc}}</div>
+                    <div class="pin">Total Sale(Rate): {{card_data.total_income}}</div>
+                    <div class="pin">Total Expence: {{card_data.total_expence}} </div>
+                    <div class="pin">Total Profit: {{card_data.total_profit}}</div>
                 </div>
             </div>
 
         </div>
     </div>
-
+    {% endif %}
 
 
     <div class="table-con" style="overflow: hidden;">
@@ -83,26 +44,35 @@
                             {% if user_role == 'admin' %}
                             <th>Staff
                                 <select name="staff" class="form-control">
-                                    <option value="all">All</option>
+                                    <option value="">All</option>
                                     {% for staff in staffs %}
-                                    <option value="{{staff.id}}">{{staff.firstName}}</option>  
+                                    <option value="{{staff.id}}">{{staff.firstName}} {{staff.lastName}}</option>  
                                     {% endfor %}
                                 </select>
                             </th>
                             {% endif %}
                             <th>Month
                                 <select name="month" class="form-control">
-                                    <option value="all">January</option>
-                                    <option value="staff1">February</option>
-                                    <option value="staff2">March</option>
+                                    <option {% if current_month == '1' %} selected {% endif %} value=1>January</option>
+                                    <option {% if current_month == '2' %} selected {% endif %} value=2>February</option>
+                                    <option {% if current_month == '3' %} selected {% endif %} value=3>March</option>
+                                    <option {% if current_month == '4' %} selected {% endif %} value=4>April</option>
+                                    <option {% if current_month == '5' %} selected {% endif %} value=5>May</option>
+                                    <option {% if current_month == '6' %} selected {% endif %} value=6>June</option>
+                                    <option {% if current_month == '7' %} selected {% endif %} value=7>July</option>
+                                    <option {% if current_month == '8' %} selected {% endif %} value=8>August</option>
+                                    <option {% if current_month == '9' %} selected {% endif %} value=9>September</option>
+                                    <option {% if current_month == '10' %} selected {% endif %} value=10>October</option>
+                                    <option {% if current_month == '11' %} selected {% endif %} value=11>November</option>
+                                    <option {% if current_month == '12' %} selected {% endif %} value=12>December</option>
                                 </select>
-                            </th>
-                            <th>From Date
+                            </th>   
+                            <!-- <th>From Date
                                 <input name="from_data" class="form-control" type="date">
                             </th>
                             <th>To Date
                                 <input name="to_date" class="form-control" type="date">
-                            </th>
+                            </th> -->
                             <th>
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </th>
@@ -117,53 +87,51 @@
                 <tr>
                     <th>Date</th>
                     {% for product in products %}
-                    <th>{{product.name}}</th>
+                    <th>{{product.name}}{{product.vendor}}</th>
                     {% endfor %}
-                    <th>Total</th>
-                    <th>{% if user_role == 'admin' %}<button onclick="addProduct()" class="btn btn-primary">Add Product</button>{% endif %}</th>
+                    <th>Total Sales(Psc)</th>
+                    <th>Total Sales(Rs)</th>
+                    <th>Total Profit</th>
+                    <th></th>
+                    <!-- <th>{% if user_role == 'admin' %}<button onclick="addProduct()" class="btn btn-primary">Add Product</button>{% endif %}</th> -->
                 </tr>
             </thead>
 
             <tbody>
+                {% for sale in sales %}
+                    <tr class="row">
+                        <td class="name">
+                            {{ sale.date }}
+                        </td>
+                        <td class="name">
+                            {{sale.Glass}}
+                        </td>
+                        <td class="name">
+                            {{sale.Hard}}
+                        </td>
+                        <td class="name">
+                            {{sale.totalNumberProducts}}
+                        </td>
+                        <td class="name">
+                            {{sale.totalSale_rs}}
+                        </td>
+                        <td class="name">
+                            {{sale.profit}}
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% if sales_added and user_role != 'admin' %}
                 <tr class="row">
-                    <td class="date">
-                        <p>12/05/2020</p>
-                    </td>
                     <td class="name">
-                        <p>12</p>
+                        {{current_day}}
                     </td>
+                    <td class="name" colspan="6">
+                        </td>
                     <td class="name">
-                        <p>24</p>
-                    </td>
-                    <td class="name">
-                        <p>12</p>
-                    </td>
-                    <td class="name">
-                        <p>48</p>
-                    </td>
-                    <td class="disable">
-                        <p onclick="editdata()">Edit</p>
+                        <a onclick="addsales()">Add Sales</a>
                     </td>
                 </tr>
-
-                <tr class="row">
-                    <td class="date">
-                        <p>13/05/2020</p>
-                    </td>
-                    <td class="name">
-                        <p></p>
-                    </td>
-                    <td class="name">
-                        <p></p>
-                    </td>
-                    <td class="name">
-                        <p></p>
-                    </td>
-                    <td class="name">
-                        <p></p>
-                    </td>
-                    <!-- <td class="disable"><p></p></td> -->
-                </tr>
+                {% endif %}
 
             </tbody>
         </table>
@@ -171,17 +139,17 @@
     <!--table container -->
 </div>
 
-<div class="content expand_details" id="editdata">
+<div class="content expand_details" id="addsales">
     <button onclick="closeBtn()" style="position: absolute; top: 15%; right: 5%;">&times</button>
     <section class="contact-from pt-4" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff; border: 1px solid; padding: 20px;">
         <div class="container">
-    
+        {% with staff_id=request.session.user_id %}
             <div class="row mt-5">
                 <div class="mx-auto">
                     <div class="form-wrapper">
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Edit Sales</h4>
+                                <h4>Add Sales</h4>
                             </div>
                         </div>
                         <form action="" method="post" _lpchecked="1">
@@ -192,34 +160,32 @@
                                         <input name="date" type="date" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                            </div>
+                            {% for product in products %}
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="glass" class="form-control" placeholder="Glass Case 1">
+                                        <input type="text" name="{{product.name}}" class="form-control" placeholder="{{product.name}}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="test" class="form-control" placeholder="Glass Case 2">
+                                        <input type="text" name="discount" class="form-control" placeholder="Discount">
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input type="text" name="pre" class="form-control" placeholder="Premium Case">
-                                    </div>
-                                </div>
-
-                                <input type="text" hidden name="staff" value=1 id="">
+                            </div>
+                            {% endfor %}
+                                <input type="text" hidden name="staff" value="{{staff_id}}" id="">
     
                             </div>
                             <div class="mt-3">
-                                <button class="btn btn-primary" style="position: inherit;">Edit</button>
+                                <button class="btn btn-primary" style="position: inherit;">Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-    
+            {% endwith %}
         </div>
     </section>
 </div>
@@ -281,12 +247,12 @@
     function addProduct() {
         document.getElementById('addProduct').style.display = 'block'
     }
-    function editdata() {
-        document.getElementById('editdata').style.display = 'block'
+    function addsales() {
+        document.getElementById('addsales').style.display = 'block'
     }
 
     function closeBtn() {
-        document.getElementById('editdata').style.display = 'none'
+        document.getElementById('addsales').style.display = 'none'
         document.getElementById('addProduct').style.display = 'none'
     }
 </script>

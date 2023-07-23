@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 
 # Create your models here.
+
 class Staffs(models.Model):
     firstName = models.CharField(max_length=30)
     lastName = models.CharField(max_length=30)
@@ -26,7 +27,7 @@ class Expences(models.Model):
     Purchase = models.CharField(max_length=100)
     Remark = models.CharField(max_length=250)
     Amount = models.CharField(max_length=10)
-    Date = models.DateField(auto_now_add=True)
+    Date = models.DateField(default = datetime.now())
 
     def save(self, *args, **kwargs):
         if not self.id and not self.Date:
@@ -41,7 +42,7 @@ class Expences(models.Model):
 
 
 class Returns(models.Model):
-    Date = models.DateField(auto_now_add=True)
+    Date = models.DateField(default = datetime.now())
     Staff  = models.ForeignKey(Staffs, on_delete=models.CASCADE)
     Description = models.TextField()
 
@@ -59,20 +60,40 @@ class Products(models.Model):
     vendor = models.CharField(max_length=25)
 
     def __str__(self):
-        return self.name
+        return self.name + ' ' + self.vendor
     
     class Meta:
         db_table = 'products'
 
 
+class AdExpence(models.Model):
+    Date = models.DateField(default= datetime.now())
+    Amount = models.IntegerField(default=2000)
+
+    def __str__(self):
+        return self.Date.isoformat() + "--" + str(self.Amount)
+    
+    class Meta:
+        db_table = 'Ad Expence'
+
+
 class Sales(models.Model):
-    Date = models.DateField(auto_now_add=True)
+    Date = models.DateField(default= datetime.now())
     Product = models.ForeignKey(Products, on_delete=models.SET('Deleted'))
     NumberOfSales = models.IntegerField(null=True, blank=True)
+    Total = models.IntegerField(null=True, blank=True)
+    Discount = models.IntegerField(default=0, blank=True)
+    Profit = models.IntegerField(null=True, blank=True)
+    AdAmount = models.IntegerField(default=2000)
     Staff = models.ForeignKey(Staffs, on_delete=models.SET('Deleted'))
                               
+    def save(self, *args, **kwargs):
+        self.Total = (int(self.NumberOfSales) * int(self.Product.sellingPrice)) - int(self.Discount)
+        self.Profit  = int(self.Total) -  (int(self.NumberOfSales) * int(self.Product.purchacePrice)) - int(self.AdAmount)
+        super().save(*args, **kwargs)                            
+
     class Meta:
         db_table = 'Sales'
 
     def __str__(self):
-        return self.Date.isoformat()
+        return self.Date.isoformat() + ' ' + self.Staff.firstName

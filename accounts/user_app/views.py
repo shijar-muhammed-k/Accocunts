@@ -1,3 +1,4 @@
+from collections import defaultdict
 import json
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -8,6 +9,7 @@ from datetime import datetime
 from django.db.models import Q, Sum, Avg
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.models import User
+import calendar
 
 # Create your views here.
 def user_login(request):
@@ -36,29 +38,51 @@ def user_logout(request):
 
 @login_required()
 def admin_home(request):
+    sales_not_added = True
+    current_month = datetime.now().month
+    month = request.GET.get('month')
+    if month != '' or month is not None:
+        current_month = month
+
+    if request.session.get('user_role') == 'admin':
+        staff = request.GET.get('staff')
+        print(staff)
+        if staff != '' and staff is not None:
+            sales = models.Sales.objects.filter(Staff__id = int(staff), Date__month = current_month).order_by('Date')
+            print('fa')
+        else:
+            sales = models.Sales.objects.filter(Date__month = current_month).order_by('Date')
+    else:
+        sales = models.Sales.objects.filter(Staff__id = request.session.get('user_id'), Date__month = current_month).order_by('Date')
+    current_day = datetime.now().date
     products = models.Products.objects.all()
     staffs = models.Staffs.objects.all()
-    sales = models.Sales.objects.all()
+
+    filteredSales = filterSales(sales)
+    print(filteredSales, type(filteredSales))
+    card_info = getSummary(filteredSales, current_month)
+
+    if (sales.filter(Date = datetime.now().strftime("%Y-%m-%d")).exists()) :
+        sales_not_added = False
+
+    print(current_month, type(current_month))
+    current_month_full = calendar.month_name[int(current_month)]
+
 
     if request.method == 'POST':
         values = dict(request.POST.items())
         for product in products:
             db = models.Sales()
+            db.Date = values['date']
             db.Product = product
             db.NumberOfSales = values[product.name]
+            db.Discount = int(request.POST.get('discount'))
             db.Staff = models.Staffs.objects.get(id = values['staff'])
             db.save()
 
-    if request.method == 'PATCH':
-        values = dict(request.POST.items())
-        for product in products:
-            db = models.Sales.objects.get(id = request.PATCH.get('product_id'))
-            db.Product = product
-            db.NumberOfSales = values[product.name]
-            db.Staff = models.Staffs.objects.get(id = values['staff'])
-            db.save()
+        return redirect('admin_home')
 
-    return render(request, 'admin/home.html', {'products': products, 'staffs': staffs, 'sales': sales})
+    return render(request, 'admin/home.html', {'products': products, 'staffs': staffs, 'sales': filteredSales, 'current_day': current_day, "sales_added": sales_not_added, 'current_month': current_month, 'current_month_full': current_month_full, 'card_data': card_info})
 
 
 @login_required()
@@ -228,3 +252,68 @@ def addProduct(request):
     db.save()
 
     return redirect('admin_home')
+
+
+
+
+def filterSales(data):
+    if(len(data) == 0):
+        return ''
+    output = []
+    values = {'totalNumberProducts': 0, 'totalSale_rs': 0, 'profit': 0}
+    for index, sales in enumerate(data):
+        if index == 0:
+            values['date'] = sales.Date.isoformat()
+            values[sales.Product.name] = sales.NumberOfSales
+            values['totalNumberProducts'] = values[sales.Product.name]
+            values['totalSale_rs'] = sales.Total + values['totalSale_rs']
+            values['profit'] = sales.Profit + values['profit']
+        else:
+            if sales.Date.isoformat() != values['date']:
+                output.append(values)
+                values = {'totalNumberProducts': 0, 'totalSale_rs': 0, 'profit': 0}
+                values['date'] = sales.Date.isoformat()
+                if sales.Product.name in values:
+                    values[sales.Product.name] = values[sales.Product.name] + sales.NumberOfSales
+                    values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']
+                else:
+                    values[sales.Product.name] = sales.NumberOfSales
+                    values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']                
+                values['totalSale_rs'] = sales.Total + values['totalSale_rs']
+                values['profit'] = sales.Profit + values['profit']
+
+            else:
+                if sales.Product.name in values:
+                    values[sales.Product.name] = values[sales.Product.name] + sales.NumberOfSales
+                    values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']
+                else:
+                    values[sales.Product.name] = sales.NumberOfSales
+                    values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']
+                values['profit'] = sales.Profit + values['profit']
+                values['totalSale_rs'] = sales.Total + values['totalSale_rs']
+
+    
+    output.append(values)
+
+    print(output)
+
+    return output
+
+
+def getSummary(data, month):
+    summary = {'total_psc': 0, 'total_expence': 0, 'total_profit': 0, 'total_income': 0}
+    expences = models.Expences.objects.filter(Date__month = month)
+    total = expences.aggregate(Sum('Amount'))
+    if (total['Amount__sum']) is None:
+        summary['total_expence'] = 0
+    else:
+        summary['total_expence'] = total['Amount__sum']
+
+    for i in data:
+        summary['total_income'] = summary['total_income'] + i['totalSale_rs']
+        summary['total_profit'] = summary['total_profit'] + i['profit']
+        summary['total_psc'] = summary['total_psc'] + i['totalNumberProducts']
+    
+    summary['total_profit'] = summary['total_profit'] - summary['total_expence']
+    print(summary)
+    return summary
