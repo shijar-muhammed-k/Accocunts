@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'accounts.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'shopizfinalTesti$default',
+        'USER': 'shopizfinalTesti',
+        'PASSWORD': 'Shijar@2000',
+        'HOST':'shopizfinalTesting.mysql.pythonanywhere-services.com',
+        'PORT':'3306',
     }
 }
 
