@@ -84,12 +84,11 @@ class Sales(models.Model):
     Total = models.IntegerField(null=True, blank=True)
     Discount = models.IntegerField(default=0, blank=True)
     Profit = models.IntegerField(null=True, blank=True)
-    AdAmount = models.IntegerField(default=2000)
     Staff = models.ForeignKey(Staffs, on_delete=models.SET('Deleted'))
                               
     def save(self, *args, **kwargs):
         self.Total = (int(self.NumberOfSales) * int(self.Product.sellingPrice)) - int(self.Discount)
-        self.Profit  = int(self.Total) -  (int(self.NumberOfSales) * int(self.Product.purchacePrice)) - int(self.AdAmount)
+        self.Profit  = int(self.Total) -  (int(self.NumberOfSales) * int(self.Product.purchacePrice))
         super().save(*args, **kwargs)                            
 
     class Meta:

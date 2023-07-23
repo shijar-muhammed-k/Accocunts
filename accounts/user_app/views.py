@@ -41,13 +41,13 @@ def admin_home(request):
     sales_not_added = True
     current_month = datetime.now().month
     month = request.GET.get('month')
-    if month != '' or month is not None:
+    if month:
         current_month = month
 
     if request.session.get('user_role') == 'admin':
         staff = request.GET.get('staff')
         print(staff)
-        if staff != '' and staff is not None:
+        if staff:
             sales = models.Sales.objects.filter(Staff__id = int(staff), Date__month = current_month).order_by('Date')
             print('fa')
         else:
@@ -264,35 +264,37 @@ def filterSales(data):
     for index, sales in enumerate(data):
         if index == 0:
             values['date'] = sales.Date.isoformat()
-            values[sales.Product.name] = sales.NumberOfSales
-            values['totalNumberProducts'] = values[sales.Product.name]
+            values[sales.Product.id] = sales.NumberOfSales
+            values['totalNumberProducts'] = values[sales.Product.id]
             values['totalSale_rs'] = sales.Total + values['totalSale_rs']
             values['profit'] = sales.Profit + values['profit']
         else:
             if sales.Date.isoformat() != values['date']:
+                values['profit'] = values['profit'] - 2000
                 output.append(values)
                 values = {'totalNumberProducts': 0, 'totalSale_rs': 0, 'profit': 0}
                 values['date'] = sales.Date.isoformat()
-                if sales.Product.name in values:
-                    values[sales.Product.name] = values[sales.Product.name] + sales.NumberOfSales
+                if sales.Product.id in values:
+                    values[sales.Product.id] = values[sales.Product.name] + sales.NumberOfSales
                     values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']
                 else:
-                    values[sales.Product.name] = sales.NumberOfSales
+                    values[sales.Product.id] = sales.NumberOfSales
                     values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']                
                 values['totalSale_rs'] = sales.Total + values['totalSale_rs']
                 values['profit'] = sales.Profit + values['profit']
 
             else:
-                if sales.Product.name in values:
-                    values[sales.Product.name] = values[sales.Product.name] + sales.NumberOfSales
+                if sales.Product.id in values:
+                    values[sales.Product.id] = values[sales.Product.id] + sales.NumberOfSales
                     values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']
                 else:
-                    values[sales.Product.name] = sales.NumberOfSales
+                    values[sales.Product.id] = sales.NumberOfSales
                     values['totalNumberProducts'] = sales.NumberOfSales + values['totalNumberProducts']
                 values['profit'] = sales.Profit + values['profit']
                 values['totalSale_rs'] = sales.Total + values['totalSale_rs']
 
     
+    values['profit'] = values['profit'] - 2000
     output.append(values)
 
     print(output)
