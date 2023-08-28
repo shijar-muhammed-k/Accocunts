@@ -106,7 +106,10 @@ def add_staff(request):
             staff_db.gender = request.POST.get('gender')
             staff_db.address = request.POST.get('address')
             staff_db.profile_picture = request.FILES['profile_picture']
-            staff_db.attachment = request.FILES['attachment']
+            try:
+                staff_db.attachment = request.FILES['attachment']
+            except:
+                staff_db.attachment = None
             staff_db.shift = request.POST.get('shift')
             staff_db.save()
             user = User.objects.create_user(username=staff_db.email, password=staff_db.phoneNumber)
@@ -121,7 +124,7 @@ def add_staff(request):
 def expences(request):
     if request.method == 'POST':
         db = models.Expences()
-        db.Date = (request.POST.get('date')).isoformat()
+        db.Date = (request.POST.get('date'))
         db.Purchase = request.POST.get('purchase')
         db.Remark = request.POST.get('remark')
         db.Amount = request.POST.get('amount')

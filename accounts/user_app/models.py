@@ -11,7 +11,7 @@ class Staffs(models.Model):
     phoneNumber = models.CharField(max_length=20)
     address = models.CharField(max_length=250)
     profile_picture = models.FileField(upload_to='profile_picture')
-    attachment = models.FileField(upload_to='attachments')
+    attachment = models.FileField(upload_to='attachments', null=True)
     status = models.BooleanField(default=True)
     access = models.BooleanField(default=True)
     shift = models.CharField(max_length=20)

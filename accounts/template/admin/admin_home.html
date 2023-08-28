@@ -21,10 +21,11 @@
 
       <div class="tabs">
         <div class="tab {% if request.path == '/admin_home' %} first {% endif %}">
+          <a href="admin_home" style="text-decoration: none; color: inherit;">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 10H8V0H0V10ZM0 18H8V12H0V18ZM10 18H18V8H10V18ZM10 0V6H18V0H10Z" fill="{% if request.path == '/admin_home' %} #152A46 {% else %} #7C7A7A {% endif %}"/>
           </svg>
-          <div class="desc"><a href="admin_home" style="text-decoration: none; color: inherit;">Sales</a></div>
+          <div class="desc" style="top: 0">Sales</div></a>
         </div>
 
         {% if user_role == 'admin' %}
@@ -48,18 +49,20 @@
 
         {% if user_role == 'admin' %}
         <div class="tab {% if request.path == '/expences' %} first {% endif %}"">
+          <a href="expences" style="text-decoration: none; color: inherit;">
           <svg width="23" height="24" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M16.6882 3.4957e-05C16.4882 0.00803496 16.2952 0.044035 16.0942 0.094035L2.50022 3.40603C0.892223 3.80003 -0.113777 5.42204 0.281223 7.03103L2.18722 14.813C2.30272 15.2766 2.52761 15.7057 2.84304 16.0644C3.15848 16.4232 3.55528 16.7012 4.00022 16.875V15C4.00022 12.243 6.24322 10 9.00022 10H21.5942L19.7192 2.28103C19.5534 1.61005 19.1612 1.01678 18.6089 0.601267C18.0566 0.185749 17.3779 -0.0265974 16.6872 3.4957e-05H16.6882ZM17.9062 4.31304L18.7192 7.71903L15.3442 8.53104L14.5002 5.15603L17.9062 4.31304ZM9.00022 12C7.34422 12 6.00022 13.344 6.00022 15V23C6.00022 24.656 7.34422 26 9.00022 26H23.0002C24.6562 26 26.0002 24.656 26.0002 23V15C26.0002 13.344 24.6562 12 23.0002 12H9.00022ZM9.00022 13.594H23.0002C23.7712 13.594 24.4062 14.229 24.4062 15V16H7.59422V15C7.59422 14.229 8.22922 13.594 9.00022 13.594ZM7.59422 19H24.4062V23C24.4062 23.771 23.7712 24.406 23.0002 24.406H9.00022C8.62798 24.4039 8.27157 24.2551 8.00835 23.9919C7.74513 23.7287 7.59632 23.3723 7.59422 23V19Z"
               fill="{% if request.path == '/expences' %} #152A46 {% else %} #7C7A7A {% endif %}" />
           </svg>
 
-          <div class="desc"><a href="expences" style="text-decoration: none; color: inherit;">Expence</a></div>
+          <div class="desc" style="top: 0">Expence</div></a>
         </div>
         {% endif %}
 
         {% if user_role == 'admin' or user_access == True %}
         <div class="tab {% if request.path == '/returns' %} first {% endif %}">
+          <a href="returns" style="text-decoration: none; color: inherit;">
           <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M8 0L15.298 2.28C15.5015 2.34354 15.6794 2.47048 15.8057 2.64229C15.932 2.81409 16.0001 3.02177 16 3.235V5H18C18.2652 5 18.5196 5.10536 18.7071 5.29289C18.8946 5.48043 19 5.73478 19 6V14C19 14.2652 18.8946 14.5196 18.7071 14.7071C18.5196 14.8946 18.2652 15 18 15L14.78 15.001C14.393 15.511 13.923 15.961 13.38 16.331L8 20L2.62 16.332C1.81252 15.7815 1.15175 15.042 0.69514 14.1779C0.238528 13.3138 -0.000101223 12.3513 3.22098e-08 11.374V3.235C0.000120606 3.02194 0.0682866 2.81449 0.194562 2.64289C0.320838 2.47128 0.498622 2.34449 0.702 2.281L8 0ZM8 2.094L2 3.97V11.374C1.99986 11.9862 2.14025 12.5903 2.41036 13.1397C2.68048 13.6892 3.07311 14.1692 3.558 14.543L3.747 14.679L8 17.58L11.782 15H7C6.73478 15 6.48043 14.8946 6.29289 14.7071C6.10536 14.5196 6 14.2652 6 14V6C6 5.73478 6.10536 5.48043 6.29289 5.29289C6.48043 5.10536 6.73478 5 7 5H14V3.97L8 2.094ZM8 10V13H17V10H8ZM8 8H17V7H8V8Z"
@@ -67,7 +70,7 @@
           </svg>
           
 
-          <div class="desc"><a href="returns" style="text-decoration: none; color: inherit;">Returns</a></div>
+          <div class="desc" style="top: 0">Returns</div></a>
         </div>
         {% endif %}
 
@@ -79,12 +82,13 @@
         <hr>
         <div class="tools">
           <div class="tool">
-            <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <a href="logout">
+              <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M3 16H5V18H17V2H5V4H3V1C3 0.734784 3.10536 0.48043 3.29289 0.292893C3.48043 0.105357 3.73478 0 4 0H18C18.2652 0 18.5196 0.105357 18.7071 0.292893C18.8946 0.48043 19 0.734784 19 1V19C19 19.2652 18.8946 19.5196 18.7071 19.7071C18.5196 19.8946 18.2652 20 18 20H4C3.73478 20 3.48043 19.8946 3.29289 19.7071C3.10536 19.5196 3 19.2652 3 19V16ZM5 9H12V11H5V14L0 10L5 6V9Z"
                 fill="#7C7A7A" />
             </svg>
-            <div class="desc"><a href="logout">Logout</a></div>
+            <div class="desc" style="top: 0">Logout</div></a>
           </div>
         </div>
       </div>
@@ -93,19 +97,11 @@
     <!--   right container -->
     <div class="main-container__right">
       <nav aria-label="Profile Navigation">
-        <div class="icon">
-          <svg width="22" height="27" viewBox="0 0 22 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M11.0001 26.3334C12.4667 26.3334 13.6667 25.1334 13.6667 23.6667H8.3334C8.3334 24.374 8.61435 25.0522 9.11445 25.5523C9.61455 26.0524 10.2928 26.3334 11.0001 26.3334ZM19.0001 18.3334V11.6667C19.0001 7.57337 16.8134 4.14671 13.0001 3.24004V2.33337C13.0001 1.22671 12.1067 0.333374 11.0001 0.333374C9.8934 0.333374 9.00007 1.22671 9.00007 2.33337V3.24004C5.1734 4.14671 3.00007 7.56004 3.00007 11.6667V18.3334L1.28007 20.0534C0.440069 20.8934 1.02674 22.3334 2.2134 22.3334H19.7734C20.9601 22.3334 21.5601 20.8934 20.7201 20.0534L19.0001 18.3334Z"
-              fill="#152A46" />
-          </svg>
-  
-        </div>
         <ul>
           <li class="dropdown"><span tabindex="-1" class="dropdown__title" id="dropdown-box">
               <div class="menu-con">
                 <div class="profile">
-                  <div class="image"></div>
+                  <div class="image"><img style="width: 32px;" src="http://127.0.0.1:8000/static/pics/staff-symbol-svgrepo-com.svg" alt=""></div>
                 </div>
                 <div class="menu">
                   <div class="dot"></div>
@@ -124,12 +120,10 @@
           </li>
         </ul>
       </nav>
-      <!-- end of navigation -->
       {% endwith %}
   
       {% block content %} {% endblock %}
       
-      <!-- main content -->
     </div>
   
   </div>

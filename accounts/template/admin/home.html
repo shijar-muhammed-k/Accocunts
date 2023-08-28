@@ -33,7 +33,7 @@
     {% endif %}
 
 
-    <div class="table-con" style="overflow: hidden;">
+    <div class="table-con">
         <div class="title">Sales Record</div>
         <div class="row">
 
@@ -163,7 +163,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <input name="date" type="date" class="form-control">
+                                        <input name="date" readonly id="dateInput" type="date" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@
     
                             </div>
                             <div class="mt-3">
-                                <button class="btn btn-primary" style="position: inherit;">Submit</button>
+                                <button class="btn btn-primary" style="position: inherit; float: right;">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -254,6 +254,12 @@
         document.getElementById('addProduct').style.display = 'block'
     }
     function addsales() {
+        const dateInput = document.getElementById('dateInput');
+        const currentDate = new Date();
+        const utcOffsetMinutes = currentDate.getTimezoneOffset();
+        currentDate.setMinutes(currentDate.getMinutes() - utcOffsetMinutes);
+        const formattedDate = currentDate.toISOString().substr(0, 10);
+        dateInput.value = formattedDate;
         document.getElementById('addsales').style.display = 'block'
     }
 

@@ -39,7 +39,7 @@
 
 
 
-    <div class="table-con" style="overflow: hidden;">
+    <div class="table-con">
         <div class="heading">
             <div class="title">Expence Record</div>
 
@@ -124,14 +124,14 @@
                 <div class="container">
                     <br />
                     <br />
-                    <h2 align="center">Edit Expence</h2>
+                    <h2 style="position: relative; top: -55px;">Edit Expence</h2>
                     <div class="form-group">
                         <form name="add_name" id="add_name" action="edit_expence-{{data.id}}" method="post">
                             {% csrf_token %}
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dynamic_field">
                                     <tr>
-                                        <td><input type="date" value="{{data.Date}}" required name="date" placeholder="Purchase"
+                                        <td><input type="date" id="EditDate" required name="date" placeholder="Purchase"
                                                 class="form-control name_list" /></td>
                                         <td><input type="text" value="{{data.Purchase}}" name="purchase" placeholder="Purchase"
                                             class="form-control name_list" /></td>
@@ -141,7 +141,7 @@
                                                 class="form-control name_list" /></td>
                                     </tr>
                                 </table>
-                                <input type="submit" name="submit" id="submit" class="btn btn-info" value="Edit" />
+                                <input style="float: right;" type="submit" name="submit" id="submit" class="btn btn-info" value="Edit" />
                             </div>
                         </form>
                     </div>
@@ -168,14 +168,14 @@
                 <div class="container">
                     <br />
                     <br />
-                    <h2 align="center">Add Expence</h2>
+                    <h2 style="position: relative; top: -55px;">Add Expence</h2>
                     <div class="form-group">
                         <form name="add_name" id="add_name" action="" method="post">
                             {% csrf_token %}
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dynamic_field">
                                     <tr>
-                                        <td><input type="date" name="date" placeholder="Purchase"
+                                        <td><input type="date" id="dateInput" name="date" placeholder="Purchase"
                                             class="form-control name_list" required/></td>
                                         <td><input type="text" name="purchase" placeholder="Purchase"
                                             class="form-control name_list" /></td>
@@ -185,7 +185,7 @@
                                             class="form-control name_list" /></td>
                                     </tr>
                                 </table>
-                                <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
+                                <input type="submit" style="float: right;" name="submit" id="submit" class="btn btn-info" value="Submit" />
                             </div>
                         </form>
                     </div>
@@ -225,14 +225,20 @@
 
 <script>
     function itemCliked(id) {
-        document.getElementById(`edit_expence_container${id}`).style.display = "block";
+       document.getElementById(`edit_expence_container${id}`).style.display = "block";
     }
-    function closeBtn(id=1) {
-        document.getElementById(`edit_expence_container${id}`).style.display = "none";
+    function closeBtn(id) {
+        id?document.getElementById(`edit_expence_container${id}`).style.display = "none":'';
         document.getElementById('add_expence_container').style.display = "none";
         document.getElementById('expand_details').style.display = "none";
     }
     function addExpence() {
+        const dateInput = document.getElementById('dateInput');
+        const currentDate = new Date();
+        const utcOffsetMinutes = currentDate.getTimezoneOffset();
+        currentDate.setMinutes(currentDate.getMinutes() - utcOffsetMinutes);
+        const formattedDate = currentDate.toISOString().substr(0, 10);
+        dateInput.value = formattedDate;
         document.getElementById('add_expence_container').style.display = "block";
     }
 </script>

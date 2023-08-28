@@ -162,7 +162,6 @@ body::-webkit-scrollbar {
 .dropdown .dropdown__title .profile .image {
     width: 32px;
     height: 32px;
-    background: url("https://images.unsplash.com/photo-1504568758572-1c648768a420?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60") no-repeat 50% -10%;
     background-size: cover;
     border-radius: 50%;
 }
@@ -389,10 +388,10 @@ body::-webkit-scrollbar {
     font-size: 12px;
 }
 
-.main-container__right .content .table-con {
+/* .main-container__right .content .table-con {
     overflow: scroll;
     -ms-overflow-style: none;
-}
+} */
 
 .main-container__right .content .table-con::-webkit-scrollbar {
     display: none;
